@@ -1,6 +1,6 @@
 const BUYER_CONFIG = {
     // License Key
-    licenseKey: "56D7DB+5577B899=9D67DA35=2B4",
+    licenseKey: "DEMO-VALID-KEY",
 
     // Business Name
     businessName: "AshrafHotspot",
