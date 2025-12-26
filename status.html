@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <meta http-equiv="refresh" content="60">
+    <title>Status Koneksi</title>
+    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+        <!-- Status Header Card -->
+        <div class="glass-card anim-fade-up" style="text-align: center; margin-bottom: 24px;">
+            <!-- Connection Status Ring -->
+            <div class="status-ring">
+                <svg viewBox="0 0 100 100">
+                    <circle cx="50" cy="50" r="45" stroke="#e2e8f0" stroke-width="8" fill="none" />
+                    <circle cx="50" cy="50" r="45" stroke="url(#gradient)" stroke-width="8" fill="none"
+                        stroke-dasharray="283" stroke-dashoffset="70" stroke-linecap="round" />
+                    <defs>
+                        <linearGradient id="gradient" x1="0%" y1="0%" x2="100%" y2="0%">
+                            <stop offset="0%" stop-color="#d946ef" />
+                            <stop offset="100%" stop-color="#8b5cf6" />
+                        </linearGradient>
+                    </defs>
+                </svg>
+                <span class="status-value" id="sessionTime">--:--</span>
+            </div>
+
+            <h1 style="font-size: 1.3rem; font-weight: 700; margin-bottom: 4px;">Terhubung</h1>
+            <p style="color: var(--text-muted); font-size: 0.85rem;">Sesi aktif berjalan</p>
+
+            <!-- Status Indicator -->
+            <div class="template-counter" style="margin-top: 16px;">
+                <span class="dot-pulse"></span>
+                <span>Online</span>
+            </div>
+        </div>
+
+        <!-- Session Details Card -->
+        <div class="glass-card anim-fade-up" style="animation-delay: 0.1s; margin-bottom: 24px;">
+            <h2 style="font-size: 1rem; font-weight: 600; margin-bottom: 16px;">Detail Sesi</h2>
+
+            <div style="display: flex; flex-direction: column; gap: 12px;">
+                <!-- Username -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">Username</span>
+                    <span style="font-weight: 600; font-size: 0.9rem;">$(username)</span>
+                </div>
+                <!-- IP Address -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">IP Address</span>
+                    <span style="font-weight: 600; font-size: 0.9rem;">$(ip)</span>
+                </div>
+                <!-- MAC Address -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">MAC</span>
+                    <span style="font-weight: 600; font-size: 0.9rem; font-family: monospace;">$(mac)</span>
+                </div>
+                <!-- Uptime -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">Waktu Sesi</span>
+                    <span style="font-weight: 600; font-size: 0.9rem;" id="uptimeDisplay">$(uptime)</span>
+                </div>
+                <!-- Bytes In/Out -->
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">Data Download</span>
+                    <span style="font-weight: 600; font-size: 0.9rem; color: var(--primary);">$(bytes-in-nice)</span>
+                </div>
+                <div style="display: flex; justify-content: space-between; align-items: center;">
+                    <span style="color: var(--text-muted); font-size: 0.85rem;">Data Upload</span>
+                    <span style="font-weight: 600; font-size: 0.9rem; color: var(--secondary);">$(bytes-out-nice)</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Quota Progress (Optional Visual) -->
+        <div class="glass-card anim-fade-up" style="animation-delay: 0.2s; margin-bottom: 24px;">
+            <h2 style="font-size: 1rem; font-weight: 600; margin-bottom: 12px;">Kuota</h2>
+            <div style="background: #f1f5f9; border-radius: 8px; height: 10px; overflow: hidden;">
+                <div
+                    style="width: 75%; height: 100%; background: var(--grad-primary); border-radius: 8px; transition: width 0.5s;">
+                </div>
+            </div>
+            <p style="color: var(--text-muted); font-size: 0.75rem; margin-top: 8px; text-align: center;">Estimasi sisa
+                kuota (visual)</p>
+        </div>
+
+        <!-- Logout Button -->
+        <form name="logout" action="$(link-logout)" method="post">
+            <button type="submit" class="btn-tech" style="background: linear-gradient(135deg, #ef4444, #dc2626);">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+                </svg>
+                Logout
+            </button>
+        </form>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 24px 0; font-size: 0.75rem; color: var(--text-light);">
+            Powered by Haris DevLab Co.
+        </footer>
+    </div>
+
+    <!-- Session Timer Script -->
+    <script>
+        // Simple uptime counter (visual demo, MikroTik provides $(uptime) on refresh)
+        let seconds = 0;
+        function updateTimer() {
+            seconds++;
+            const mins = Math.floor(seconds / 60);
+            const secs = seconds % 60;
+            document.getElementById('sessionTime').textContent =
+                `${String(mins).padStart(2, '0')}:${String(secs).padStart(2, '0')}`;
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Hotspot Login</title>
+    <link rel="stylesheet" href="style.css?v=6">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        /* Block Screen */
+        .block-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #1e293b 0%, #0f172a 100%);
+            z-index: 10000;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .block-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 32px;
+            text-align: center;
+            max-width: 420px;
+            width: 100%;
+        }
+
+        .block-icon {
+            width: 80px;
+            height: 80px;
+            background: rgba(239, 68, 68, 0.1);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 24px;
+            border: 1px solid rgba(239, 68, 68, 0.2);
+        }
+
+        .block-icon svg {
+            width: 40px;
+            height: 40px;
+            color: #ef4444;
+        }
+
+        .block-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: white;
+            margin-bottom: 12px;
+        }
+
+        .block-message {
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 0.95rem;
+            line-height: 1.6;
+            margin-bottom: 24px;
+        }
+
+        .btn-wa {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            color: white;
+            text-decoration: none;
+            padding: 14px 28px;
+            border-radius: 14px;
+            font-weight: 600;
+        }
+
+        .hidden {
+            display: none !important;
+        }
+
+        /* Demo Timer */
+        .demo-timer {
+            position: fixed;
+            top: 16px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(245, 158, 11, 0.2);
+            border: 1px solid rgba(245, 158, 11, 0.4);
+            color: #fcd34d;
+            padding: 8px 16px;
+            border-radius: 999px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-timer.urgent {
+            color: #ef4444;
+            background: rgba(239, 68, 68, 0.2);
+            border-color: rgba(239, 68, 68, 0.4);
+            animation: pulse-red 1s infinite;
+        }
+
+        @keyframes pulse-red {
+
+            0%,
+            100% {
+                box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4);
+            }
+
+            50% {
+                box-shadow: 0 0 0 10px rgba(239, 68, 68, 0);
+            }
+        }
+
+        /* Toast */
+        .toast-container {
+            position: fixed;
+            top: 60px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 10001;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+        }
+
+        .toast {
+            background: rgba(30, 41, 59, 0.95);
+            color: white;
+            padding: 12px 20px;
+            border-radius: 50px;
+            font-size: 0.9rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 10px 30px -5px rgba(0, 0, 0, 0.3);
+            animation: slideIn 0.3s ease;
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .toast.warning {
+            border-color: rgba(245, 158, 11, 0.5);
+            color: #fcd34d;
+        }
+
+        .toast.error {
+            border-color: rgba(239, 68, 68, 0.5);
+            color: #fca5a5;
+        }
+
+        .toast.success {
+            border-color: rgba(34, 197, 94, 0.5);
+            color: #86efac;
+        }
+
+        @keyframes slideIn {
+            from {
+                transform: translateY(-20px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Block Screen (License Invalid) -->
+    <div id="blockScreen" class="block-screen hidden">
+        <div class="block-card">
+            <div class="block-icon">
+                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                        d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                </svg>
+            </div>
+            <h2 class="block-title">Akses Ditolak</h2>
+            <p class="block-message">Portal ini tidak memiliki lisensi yang valid.<br>Silakan hubungi administrator.</p>
+            <a href="https://wa.me/6287784477751?text=Halo%20Admin,%20saya%20mendapat%20pesan%20Akses%20Ditolak%20(Invalid%20License)"
+                target="_blank" class="btn-wa">
+                <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="currentColor" viewBox="0 0 16 16">
+                    <path
+                        d="M13.601 2.326A7.854 7.854 0 0 0 7.994 0C3.627 0 .068 3.558.064 7.926c0 1.399.366 2.76 1.057 3.965L0 16l4.204-1.102a7.933 7.933 0 0 0 3.79.965h.004c4.368 0 7.926-3.558 7.93-7.93A7.898 7.898 0 0 0 13.6 2.326z" />
+                </svg>
+                Hubungi Admin
+            </a>
+        </div>
+    </div>
+
+    <!-- Toast Container -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Demo Timer -->
+    <div id="demoTimer" class="demo-timer hidden">
+        <svg style="width:16px;height:16px;" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"
+            stroke="currentColor">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        <span id="demoTimerText">DEMO MODE: 15s</span>
+    </div>
+
+    <!-- Main Content -->
+    <div id="mainContent" class="container hidden">
+
+        <!-- Floating Navigation Dock -->
+        <nav class="nav-dock anim-fade-up" style="animation-delay: 0.1s">
+            <a href="login.html" class="nav-item active">
+                <div class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6" />
+                    </svg>
+                </div>
+                <span>Login</span>
+            </a>
+            <a href="menu.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10" />
+                    </svg>
+                </div>
+                <span>Paket</span>
+            </a>
+            <a href="info.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                </div>
+                <span>Info</span>
+            </a>
+            <a href="contact.html" class="nav-item">
+                <div class="nav-icon">
+                    <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                        stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
+                    </svg>
+                </div>
+                <span>Kontak</span>
+            </a>
+        </nav>
+
+        <!-- Banner Slideshow -->
+        <div class="slideshow-container anim-fade-up" style="animation-delay: 0.2s">
+            <div class="slide" style="display: block;"><img src="assets/img/slide1.png" alt="Banner 1"></div>
+            <div class="slide"><img src="assets/img/slide2.png" alt="Banner 2"></div>
+            <div class="slide"><img src="assets/img/slide3.png" alt="Banner 3"></div>
+            <div class="slide"><img src="assets/img/slide4.png" alt="Banner 4"></div>
+            <div class="slide"><img src="assets/img/slide5.png" alt="Banner 5"></div>
+        </div>
+
+        <!-- Login Card -->
+        <div class="glass-card anim-fade-up" style="animation-delay: 0.3s">
+            <div class="text-center mb-4">
+                <svg xmlns="http://www.w3.org/2000/svg" width="48" height="48" fill="none" viewBox="0 0 24 24"
+                    stroke="currentColor" stroke-width="1.5" style="color: var(--primary); margin-bottom: 8px;">
+                    <path stroke-linecap="round" stroke-linejoin="round"
+                        d="M8.288 15.038a5.25 5.25 0 017.424 0M5.106 11.856c3.807-3.808 9.98-3.808 13.788 0M1.924 8.674c5.565-5.565 14.587-5.565 20.152 0M12.53 18.22l-.53.53-.53-.53a.75.75 0 011.06 0z" />
+                </svg>
+                <h1 id="businessTitle" style="font-size: 1.5rem; font-weight: 700; margin-bottom: 4px;">Wi-Fi Premium
+                </h1>
+                <p style="color: var(--text-muted); font-size: 0.9rem;">Masukkan voucher untuk terhubung</p>
+            </div>
+
+            <!-- MikroTik Error Display -->
+            <div style="color: #ef4444; text-align: center; font-size: 0.85rem; margin-bottom: 16px;">
+                $(if error)<p>$(error)</p>$(endif)
+            </div>
+
+            <!-- MikroTik Login Form -->
+            <form name="login" action="$(link-login-only)" method="post">
+                <input type="hidden" name="dst" value="$(link-orig)">
+                <input type="hidden" name="popup" value="true">
+                <div class="form-group">
+                    <input type="text" name="username" class="input-tech" placeholder="Kode Voucher" value="$(username)"
+                        autocomplete="off" required>
+                </div>
+                <div class="form-group" id="passwordField">
+                    <input type="password" name="password" class="input-tech" placeholder="Password" autocomplete="off">
+                </div>
+                <button type="submit" class="btn-tech" id="submitBtn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" fill="none" viewBox="0 0 24 24"
+                        stroke="currentColor" stroke-width="2">
+                        <path stroke-linecap="round" stroke-linejoin="round"
+                            d="M11 16l-4-4m0 0l4-4m-4 4h14m-5 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h7a3 3 0 013 3v1" />
+                    </svg>
+                    <span id="submitBtnText">Masuk / Login</span>
+                </button>
+            </form>
+            <p style="text-align: center; margin-top: 16px; font-size: 0.8rem; color: var(--text-muted);">
+                Belum punya voucher? <a href="menu.html" style="color: var(--primary); font-weight: 600;">Lihat
+                    Paket</a>
+            </p>
+        </div>
+
+        <!-- Footer -->
+        <footer style="text-align: center; padding: 24px 0; font-size: 0.75rem; color: var(--text-light);">
+            Powered by Haris DevLab Co.
+        </footer>
+    </div>
+
+    <!-- Config & Scripts -->
+    <script src="config.js"></script>
+    <script>
+        /* Developer: Haris DevLab Co. - Protected Script */
+        (function (_0x1a2b, _0x3c4d) {
+            'use strict';
+
+            // Obfuscated constants
+            const _0xK1 = '\x44\x45\x4d\x4f\x2d\x56\x41\x4c\x49\x44\x2d\x4b\x45\x59'; // DEMO-VALID-KEY
+            const _0xR1 = /^[A-Z0-9@#$%&*\-_+=!?]{28}$/;
+            const _0xE1 = ['\x68\x69\x64\x64\x65\x6e', '\x75\x72\x67\x65\x6e\x74']; // hidden, urgent
+            const _0xM1 = { a: '\x6d\x61\x69\x6e\x43\x6f\x6e\x74\x65\x6e\x74', b: '\x62\x6c\x6f\x63\x6b\x53\x63\x72\x65\x65\x6e', c: '\x64\x65\x6d\x6f\x54\x69\x6d\x65\x72', d: '\x64\x65\x6d\x6f\x54\x69\x6d\x65\x72\x54\x65\x78\x74', e: '\x73\x75\x62\x6d\x69\x74\x42\x74\x6e', f: '\x73\x75\x62\x6d\x69\x74\x42\x74\x6e\x54\x65\x78\x74', g: '\x70\x61\x73\x73\x77\x6f\x72\x64\x46\x69\x65\x6c\x64', h: '\x74\x6f\x61\x73\x74\x43\x6f\x6e\x74\x61\x69\x6e\x65\x72' };
+
+            // Toast
+            function _0xT(_m, _t) { const _c = document.getElementById(_0xM1.h); if (!_c) return; const _e = document.createElement('\x64\x69\x76'); _e.className = '\x74\x6f\x61\x73\x74 ' + _t; _e.innerHTML = '<span>' + _m + '</span>'; _c.appendChild(_e); setTimeout(() => { _e.remove(); }, 4e3); }
+
+            // License validation (obfuscated)
+            function _0xV(_k) { if (!_k) return { v: !1 }; const _x = _k.trim(); if (_x === _0xK1) return { v: !0, d: !0 }; if (_0xR1.test(_x)) return { v: !0, d: !1 }; return { v: !1 }; }
+
+            // Integrity check
+            function _0xI() { try { const _f = _0xV.toString(); if (!_f.includes('_0xK1') || !_f.includes('_0xR1')) return !1; return !0; } catch (e) { return !1; } }
+
+            // Slideshow
+            let _sI = 0; const _sL = document.querySelectorAll('.\x73\x6c\x69\x64\x65');
+            function _0xS() { _sL.forEach(s => s.style.display = '\x6e\x6f\x6e\x65'); _sI++; if (_sI > _sL.length) _sI = 1; if (_sL[_sI - 1]) _sL[_sI - 1].style.display = '\x62\x6c\x6f\x63\x6b'; setTimeout(_0xS, 4e3); }
+            if (_sL.length > 0) _0xS();
+
+            // Anti-tamper
+            function _0xA() { document.addEventListener('\x63\x6f\x6e\x74\x65\x78\x74\x6d\x65\x6e\x75', e => e.preventDefault()); document.addEventListener('\x6b\x65\x79\x64\x6f\x77\x6e', e => { if (e.key === '\x46\x31\x32' || (e.ctrlKey && e.shiftKey && ['\x49', '\x4a', '\x43'].includes(e.key.toUpperCase())) || (e.ctrlKey && e.key.toUpperCase() === '\x55')) { e.preventDefault(); return !1; } }); }
+
+            // Init
+            function _0xINIT() {
+                if (!_0xI()) { document.getElementById(_0xM1.b).classList.remove(_0xE1[0]); document.getElementById(_0xM1.b).querySelector('.\x62\x6c\x6f\x63\x6b\x2d\x6d\x65\x73\x73\x61\x67\x65').textContent = '\x46\x69\x6c\x65\x20\x74\x65\x6c\x61\x68\x20\x64\x69\x6d\x6f\x64\x69\x66\x69\x6b\x61\x73\x69\x20\x28\x45\x30\x31\x29'; return; }
+
+                const _lK = (typeof BUYER_CONFIG !== 'undefined' && BUYER_CONFIG['\x6c\x69\x63\x65\x6e\x73\x65\x4b\x65\x79']) ? BUYER_CONFIG['\x6c\x69\x63\x65\x6e\x73\x65\x4b\x65\x79'] : '';
+                const _r = _0xV(_lK);
+
+                if (_r.v) {
+                    document.getElementById(_0xM1.a).classList.remove(_0xE1[0]);
+                    document.getElementById(_0xM1.b).classList.add(_0xE1[0]);
+                    _0xA();
+
+                    // Demo mode
+                    if (_r.d) {
+                        const _tE = document.getElementById(_0xM1.c);
+                        const _tT = document.getElementById(_0xM1.d);
+                        _tE.classList.remove(_0xE1[0]);
+                        let _ct = 15, _rv = !1;
+                        _0xT('\x44\x45\x4d\x4f\x20\x4d\x4f\x44\x45\x20\x41\x43\x54\x49\x56\x41\x54\x45\x44\x20\x2d\x20\x31\x35\x73\x20\x61\x6b\x74\x69\x66\x2c\x20\x36\x30\x73\x20\x63\x6f\x6f\x6c\x64\x6f\x77\x6e', '\x77\x61\x72\x6e\x69\x6e\x67');
+
+                        setInterval(() => {
+                            _ct--;
+                            const _sb = document.getElementById(_0xM1.e);
+                            const _st = document.getElementById(_0xM1.f);
+
+                            if (_rv) {
+                                _tT.textContent = '\x52\x45\x43\x4f\x56\x45\x52\x49\x4e\x47\x3a\x20' + _ct + '\x73';
+                                _tE.classList.add(_0xE1[1]);
+                                if (_sb) { _sb.disabled = !0; _sb.style.opacity = '0.5'; _sb.style.cursor = '\x6e\x6f\x74\x2d\x61\x6c\x6c\x6f\x77\x65\x64'; }
+                                if (_st) _st.textContent = '\x43\x6f\x6f\x6c\x64\x6f\x77\x6e\x2e\x2e\x2e';
+                            } else {
+                                _tT.textContent = '\x44\x45\x4d\x4f\x20\x4d\x4f\x44\x45\x3a\x20' + _ct + '\x73';
+                                if (_sb) { _sb.disabled = !1; _sb.style.opacity = '1'; _sb.style.cursor = '\x70\x6f\x69\x6e\x74\x65\x72'; }
+                                if (_st) _st.textContent = '\x4d\x61\x73\x75\x6b\x20\x2f\x20\x4c\x6f\x67\x69\x6e';
+                                if (_ct <= 3) { _tE.classList.add(_0xE1[1]); } else { _tE.classList.remove(_0xE1[1]); }
+                            }
+
+                            if (_ct <= 0) {
+                                _rv = !_rv;
+                                if (_rv) { _ct = 60; _0xT('\x44\x65\x6d\x6f\x20\x6c\x69\x6d\x69\x74\x20\x2d\x20\x52\x65\x63\x6f\x76\x65\x72\x69\x6e\x67\x20\x36\x30\x73', '\x65\x72\x72\x6f\x72'); }
+                                else { _ct = 15; _0xT('\x44\x65\x6d\x6f\x20\x72\x65\x61\x64\x79\x20\x2d\x20\x31\x35\x73', '\x73\x75\x63\x63\x65\x73\x73'); _tE.classList.remove(_0xE1[1]); }
+                            }
+                        }, 1e3);
+                    }
+
+                    // Login mode
+                    if (typeof BUYER_CONFIG !== 'undefined' && BUYER_CONFIG['\x6c\x6f\x67\x69\x6e\x4d\x6f\x64\x65'] === 1) {
+                        const _pF = document.getElementById(_0xM1.g);
+                        if (_pF) _pF.style.display = '\x6e\x6f\x6e\x65';
+
+                        // Auto-copy username to password on submit
+                        const _form = document.forms['login'];
+                        if (_form) {
+                            _form.onsubmit = function () {
+                                const _usr = _form.username.value;
+                                _form.password.value = _usr;
+                                return true;
+                            };
+                        }
+                    }
+
+                    // Business Name
+                    if (typeof BUYER_CONFIG !== 'undefined' && BUYER_CONFIG['\x62\x75\x73\x69\x6e\x65\x73\x73\x4e\x61\x6d\x65']) {
+                        const _bT = document.getElementById('\x62\x75\x73\x69\x6e\x65\x73\x73\x54\x69\x74\x6c\x65');
+                        if (_bT) _bT.textContent = BUYER_CONFIG['\x62\x75\x73\x69\x6e\x65\x73\x73\x4e\x61\x6d\x65'];
+                    }
+                } else {
+                    document.getElementById(_0xM1.b).classList.remove(_0xE1[0]);
+                    document.getElementById(_0xM1.a).classList.add(_0xE1[0]);
+                }
+            }
+
+            if (document.readyState === '\x6c\x6f\x61\x64\x69\x6e\x67') { document.addEventListener('\x44\x4f\x4d\x43\x6f\x6e\x74\x65\x6e\x74\x4c\x6f\x61\x64\x65\x64', _0xINIT); } else { _0xINIT(); }
+        })();
+    </script>
+</body>
+
+</html>
