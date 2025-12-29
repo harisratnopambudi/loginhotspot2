@@ -1,0 +1,51 @@
+==========================================================================
+                 PANDUAN INSTALASI LOGIN PAGE MIKROTIK
+==========================================================================
+
+Terima kasih telah membeli produk Login Page ini. Berikut adalah langkah-langkah
+untuk memasang dan mengatur login page di router Mikrotik Anda.
+
+TAHAP 1: UPLOAD FILE
+--------------------------------------------------------------------------
+1. Ekstrak file ZIP yang Anda terima (jika dalam bentuk ZIP).
+2. Buka aplikasi Winbox dan login ke Mikrotik Anda.
+3. Klik menu "Files" di sebelah kiri.
+4. Drag & Drop folder login page ini ke dalam jendela Files di Winbox.
+   Catatan: Jika router Anda menggunakan storage 'flash', masukkan ke dalam folder 'flash'.
+
+TAHAP 2: AKTIFKAN LOGIN PAGE
+--------------------------------------------------------------------------
+1. Di Winbox, masuk ke menu "IP" -> "Hotspot".
+2. Pindah ke tab "Server Profiles".
+3. Klik dua kali profile hotspot yang sedang aktif (biasanya bernama 'hsprof1' atau nama lain).
+4. Pada tab "General", lihat bagian "HTML Directory".
+5. Klik tanda panah bawah dan pilih folder login page yang baru saja Anda upload.
+6. Klik "Apply" dan "OK".
+7. Login page baru Anda sudah aktif. Coba tes dengan login kembali ke jaringan wifi.
+
+TAHAP 3: PENGATURAN (CONFIG.JS)
+--------------------------------------------------------------------------
+Untuk mengubah nama hotspot, mode login, dan fitur lainnya, Anda cukup mengedit
+file bernama 'config.js'.
+
+1. Buka file 'config.js' di komputer menggunakan Notepad / Text Editor.
+2. Anda akan melihat beberapa pengaturan:
+
+   - businessName: "AshrafHotspot"
+     -> Ganti tulisan di dalam tanda kutip dengan nama hotspot Anda.
+   
+   - loginMode: 1
+     -> Isi 1 = Jika sistem voucheran (Kode Voucher saja / Username=Password).
+     -> Isi 2 = Jika menggunakan sistem Username dan Password terpisah (Member).
+
+   - enableNetflix: 0
+     -> Isi 1 = Untuk mengaktifkan tampilan/tema fitur Netflix.
+     -> Isi 0 = Untuk mematikan fitur tersebut.
+
+3. Simpan file 'config.js' setelah diedit.
+4. Upload kembali file 'config.js' tersebut ke dalam folder login page di Winbox 
+   (timpa file yang lama).
+
+==========================================================================
+Jika ada kendala, silakan hubungi kami.
+Selamat menggunakan!
