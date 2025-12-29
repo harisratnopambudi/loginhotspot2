@@ -1,0 +1,33 @@
+JUDUL PRODUK:
+Template Login Page Hotspot MikroTik Premium Responsive - Desain Modern & Ringan
+
+DESKRIPSI PRODUK:
+Ingin tampilan login hotspot MikroTik Anda terlihat lebih Profesional dan Mewah?
+Template ini solusinya! Didesain dengan gaya modern (Glassmorphism) yang ringan dan responsif untuk semua perangkat (HP, Tablet, Laptop).
+
+FITUR UNGGULAN:
+[+] Desain Responsif & Modern: Tampilan menyesuaikan layar pengguna, terlihat elegan di HP maupun PC.
+[+] Banner Slideshow: Tampilkan promo atau informasi penting dengan gambar bergulir otomatis.
+[+] Menu Navigasi Lengkap: Dilengkapi menu Login, Daftar Harga, Info, dan Kontak.
+[+] Auto-Copy Username: Mode simpel dimana User = Password (opsional, bisa diaktifkan).
+[+] Popup Promo Terintegrasi: Fitur popup untuk promosi produk tambahan (contoh: Jualan Voucher Streaming/Netflix).
+[+] Tombol WhatsApp: Memudahkan pelanggan menghubungi Admin langsung dari halaman login.
+[+] Notifikasi Interaktif: Pesan error/sukses muncul dengan animasi toast yang keren.
+[+] Anti-Inspect: Dilengkapi proteksi sederhana untuk mencegah klik kanan/insepct element.
+[+] Ringan & Cepat: Dibangun dengan HTML5 & CSS3 murni tanpa framework berat, loading super cepat!
+
+KOMPATIBILITAS:
+- Support semua versi RouterOS MikroTik.
+- Support semua ukuran layar gadget.
+
+YANG ANDA DAPATKAN:
+- File Source Code Lengkap (.html, .css, .js, .img).
+- Panduan Instalasi / Config sederhana.
+- Gratis Konsultasi Pemasangan (chat admin).
+
+CARA ORDER:
+1. Checkout seperti biasa.
+2. File akan dikirimkan via Email / Link Download (Cantumkan email di catatan).
+3. Konfirmasi terima pesanan setelah file dicek.
+
+Catatan: Ini adalah produk digital (Non-Fisik). Silakan gunakan kurir Termasuk Ongkos Kirim jika tersedia, atau chat admin untuk detail pengiriman.
